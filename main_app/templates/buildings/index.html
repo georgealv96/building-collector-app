@@ -5,11 +5,13 @@
 
 {% for building in buildings %}
 <div class="card">
-  <div class="card-content">
-    <span class="card-title">{{ building.name }} ({{ building.opening_year }})</span>
-    <p>Location: {{ building.city }}, {{ building.country }}</p>
-    <p>Height: {{ building.height_in_feet}} ft.</p>
-  </div>
+  <a href="{% url 'detail' building.id %}">
+    <div class="card-content">
+      <span class="card-title">{{ building.name }} ({{ building.opening_year }})</span>
+      <p>Location: {{ building.city }}, {{ building.country }}</p>
+      <p>Height: {{ building.height_in_feet}} ft.</p>
+    </div>
+  </a>
 </div>
 {% endfor %}
 

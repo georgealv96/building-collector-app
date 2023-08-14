@@ -16,3 +16,10 @@ def buildings_index(request):
     return render(request, 'buildings/index.html', {
         'buildings': buildings
     })
+
+def buildings_detail(request, building_id):
+    
+    building = Building.objects.get(id=building_id)
+
+    return render(request, 'buildings/detail.html', { 'building': building 
+    })

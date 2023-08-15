@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 from .models import Building
@@ -23,3 +24,15 @@ def buildings_detail(request, building_id):
 
     return render(request, 'buildings/detail.html', { 'building': building 
     })
+
+class BuildingCreate(CreateView):
+    model = Building
+    fields = '__all__'
+
+class BuildingUpdate(UpdateView):
+    model = Building
+    fields = '__all__'
+
+class BuildingDelete(DeleteView):
+    model = Building
+    success_url = '/buildings'

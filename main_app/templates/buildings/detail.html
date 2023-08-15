@@ -9,6 +9,10 @@
     <p>Location: {{ building.city }}, {{ building.country }}</p>
     <p>Height: {{ building.height_in_feet}} ft.</p>
   </div>
+  <div class="card-action">
+    <a href="{% url 'buildings_update' building.id %}">Edit</a>
+    <a href="{% url 'buildings_delete' building.id %}">Delete</a>
+  </div>
 </div>
 
 {% endblock %}

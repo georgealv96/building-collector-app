@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 from .models import Building
+from .forms import VisitForm
 
 def home(request):
     return render(request, 'home.html')
@@ -21,8 +22,12 @@ def buildings_index(request):
 def buildings_detail(request, building_id):
     
     building = Building.objects.get(id=building_id)
-
-    return render(request, 'buildings/detail.html', { 'building': building 
+    # instantiate VisitForm to be rendered in the template
+    visit_form = VisitForm()
+    # include the building and visit_form in the context
+    return render(request, 'buildings/detail.html', { 
+        'building': building,
+        'visit_form': visit_form 
     })
 
 class BuildingCreate(CreateView):

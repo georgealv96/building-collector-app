@@ -16,3 +16,17 @@ class Building(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'building_id': self.id})
     
+RATINGS = (
+    ('G', 'Good'),
+    ('O', 'Okay'),
+    ('B', 'Bad')
+)
+
+class Visit(models.Model):
+    name = models.CharField(max_length=50)
+    date = models.DateField('Visit Date')
+    rating = models.CharField(max_length=1, choices=RATINGS, default=RATINGS[1][0])
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.get_rating_display()} on {self.date}'

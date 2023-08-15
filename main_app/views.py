@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
@@ -41,3 +41,15 @@ class BuildingUpdate(UpdateView):
 class BuildingDelete(DeleteView):
     model = Building
     success_url = '/buildings'
+
+def add_visit(request, building_id):
+    # create a ModelForm instance using the data in request.POST (req.body in Express.js)
+    form = VisitForm(request.POST)
+    # validate the form
+    if form.is_valid():
+        # don't dave the form to the db until it
+        # has the building_id assigned
+        new_visit = form.save(commit=False)
+        new_visit.building_id = building_id
+        new_visit.save()
+    return redirect('detail', building_id=building_id)

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 
 # Create your views here.
-from .models import Building
+from .models import Building, Reference
 from .forms import VisitForm
 
 def home(request):
@@ -53,3 +54,10 @@ def add_visit(request, building_id):
         new_visit.building_id = building_id
         new_visit.save()
     return redirect('detail', building_id=building_id)
+
+class ReferenceList(ListView):
+    model = Reference
+
+class ReferenceCreate(CreateView):
+    model = Reference
+    fields = '__all__'

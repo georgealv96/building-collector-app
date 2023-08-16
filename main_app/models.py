@@ -3,7 +3,7 @@ from django.urls import reverse
 
 # Create your models here.
 
-class Similar(models.Model):
+class Reference(models.Model):
     name = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
 
@@ -17,7 +17,7 @@ class Building(models.Model):
     country = models.CharField(max_length=100)
     height_in_feet = models.FloatField()
     # M:M relationship
-    similars = models.ManyToManyField(Similar)
+    references = models.ManyToManyField(Reference)
 
     def __str__(self):
         return self.name

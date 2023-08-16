@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Building References List</h1>
+
+{% for reference in reference_list %}
+  <div class="card">
+    <div class="card-content">
+      <h5 class="card_title">{{ reference.name }}</h5>
+      <p>Located in {{ reference.country }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+{% endblock %}

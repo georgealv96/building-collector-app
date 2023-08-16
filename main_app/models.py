@@ -3,12 +3,21 @@ from django.urls import reverse
 
 # Create your models here.
 
+class Similar(models.Model):
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Building(models.Model):
     name = models.CharField(max_length=100)
     opening_year = models.IntegerField()
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     height_in_feet = models.FloatField()
+    # M:M relationship
+    similars = models.ManyToManyField(Similar)
 
     def __str__(self):
         return self.name
@@ -30,3 +39,6 @@ class Visit(models.Model):
 
     def __str__(self):
         return f'{self.get_rating_display()} on {self.date}'
+    
+    class Meta:
+        ordering = ['-date']

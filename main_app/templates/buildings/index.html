@@ -4,8 +4,8 @@
 <h1>List of Buildings</h1>
 
 {% for building in buildings %}
-<div class="card">
-  <a href="{% url 'detail' building.id %}">
+<div class="card grey darken-1">
+  <a href="{% url 'detail' building.id %}" class="white-text">
     <div class="card-content">
       <span class="card-title">{{ building.name }} ({{ building.opening_year }})</span>
       <p>Location: {{ building.city }}, {{ building.country }}</p>

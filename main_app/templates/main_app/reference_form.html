@@ -5,10 +5,10 @@
   <h1>Add Building Reference</h1>
   <form action="" method="POST">
     {% csrf_token %}
-    <table>
+    <table class="thing">
       {{ form.as_table }}
     </table>
-    <input type="submit" value="Submit" class="btn">
+    <input type="submit" value="Submit" class="btn grey darken-3">
   </form>
-
+  
 {% endblock %}

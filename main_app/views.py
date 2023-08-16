@@ -23,12 +23,16 @@ def buildings_index(request):
 def buildings_detail(request, building_id):
     
     building = Building.objects.get(id=building_id)
+    # Get the references the building doesn't have
+    id_list = building.references.all().values_list('id')
+    references_building_doesnt_have = Reference.objects.exclude(id__in=id_list)
     # instantiate VisitForm to be rendered in the template
     visit_form = VisitForm()
     # include the building and visit_form in the context
     return render(request, 'buildings/detail.html', { 
         'building': building,
-        'visit_form': visit_form 
+        'visit_form': visit_form,
+        'references': references_building_doesnt_have
     })
 
 class BuildingCreate(CreateView):

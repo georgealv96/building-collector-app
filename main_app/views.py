@@ -33,7 +33,7 @@ def buildings_detail(request, building_id):
 
 class BuildingCreate(CreateView):
     model = Building
-    fields = '__all__'
+    fields = ['name', 'opening_year', 'city', 'country', 'height_in_feet']
 
 class BuildingUpdate(UpdateView):
     model = Building

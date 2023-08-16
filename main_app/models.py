@@ -9,6 +9,9 @@ class Reference(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('references_index')
 
 class Building(models.Model):
     name = models.CharField(max_length=100)
@@ -24,7 +27,7 @@ class Building(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', kwargs={'building_id': self.id})
-    
+
 RATINGS = (
     ('G', 'Good'),
     ('O', 'Okay'),

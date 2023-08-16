@@ -59,6 +59,10 @@ def add_visit(request, building_id):
         new_visit.save()
     return redirect('detail', building_id=building_id)
 
+def assoc_reference(request, building_id, reference_id):
+    Building.objects.get(id=building_id).references.add(reference_id)
+    return redirect('detail', building_id=building_id)
+
 class ReferenceList(ListView):
     model = Reference
 

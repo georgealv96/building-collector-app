@@ -71,7 +71,7 @@
             </span>
           </div>
           <div class="card-action">
-            <form action="" method="POST">
+            <form action="{% url 'assoc_reference' building.id reference.id %}" method="POST">
               {% csrf_token %}
               <button type="submit" class="btn">Add</button>
             </form>
@@ -79,7 +79,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <h5>{{building.name}} Already Has All Refereces Available</h5>
+      <h5>There Are No More Refereces Available For This Building</h5>
     {% endif %}
   </div>
 </div>

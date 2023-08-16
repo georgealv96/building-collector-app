@@ -10,6 +10,7 @@ urlpatterns = [
     path('buildings/<int:pk>/update/', views.BuildingUpdate.as_view(), name='buildings_update'),
     path('buildings/<int:pk>/delete/', views.BuildingDelete.as_view(), name='buildings_delete'),
     path('buildings/<int:building_id>/add_visit/', views.add_visit, name='add_visit'),
+    path('buildings/<int:building_id>/assoc_reference/<int:reference_id>/', views.assoc_reference, name='assoc_reference'),
     path('references/', views.ReferenceList.as_view(), name='references_index'),
     path('references/create/', views.ReferenceCreate.as_view(), name='references_create'),
 ]

@@ -3,4 +3,10 @@
 
   <h1>This is the Home page</h1>
 
+  {% for photo in photos %}
+    <img class="responsive-img card-panel" src="{{photo.url}}">
+  {% empty %}
+    <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+  {% endfor %}
+  
 {% endblock %}

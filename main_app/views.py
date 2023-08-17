@@ -16,7 +16,8 @@ from .models import Building, Reference, Photo
 from .forms import VisitForm
 
 def home(request):
-    return render(request, 'home.html')
+    photos = Photo.objects.all()
+    return render(request, 'home.html', {'photos': photos})
 
 def about(request):
     return render(request, 'about.html')
@@ -101,8 +102,6 @@ def add_photo(request, building_id):
             print('An error occured uploading file to S3')
             print(e)
     return redirect('detail', building_id=building_id)
-
-
 
 @login_required
 def assoc_reference(request, building_id, reference_id):

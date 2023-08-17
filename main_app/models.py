@@ -30,6 +30,13 @@ class Building(models.Model):
     def get_absolute_url(self):
         return reverse('detail', kwargs={'building_id': self.id})
 
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    building = models.ForeignKey(Building, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Photo for building_id: {self.building_id} @{self.url}'
+
 RATINGS = (
     ('G', 'Good'),
     ('O', 'Okay'),

@@ -6,8 +6,13 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+# imports for uuid
+import uuid
+import boto3
+import os
+
 # Create your views here.
-from .models import Building, Reference
+from .models import Building, Reference, Photo
 from .forms import VisitForm
 
 def home(request):
@@ -75,6 +80,29 @@ def add_visit(request, building_id):
         new_visit.building_id = building_id
         new_visit.save()
     return redirect('detail', building_id=building_id)
+
+@login_required
+def add_photo(request, building_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = 'buildingcollector/' + uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            bucket = os.environ['BUCKET_NAME']
+            s3.upload_fileobj(photo_file, bucket, key)
+            # build the full url string
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            # we can assign to building_id or building (if you havea building object)
+            Photo.objects.create(url=url, building_id=building_id)
+        except Exception as e:
+            print('An error occured uploading file to S3')
+            print(e)
+    return redirect('detail', building_id=building_id)
+
+
 
 @login_required
 def assoc_reference(request, building_id, reference_id):

@@ -3,6 +3,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 from .models import Building, Reference
@@ -14,14 +16,17 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def buildings_index(request):
-    
-    buildings = Building.objects.all()
+    # This reads ALL buildings, not just the logged in user's buildings
+    # buildings = Building.objects.all()
 
+    buildings = Building.objects.filter(user=request.user)
     return render(request, 'buildings/index.html', {
         'buildings': buildings
     })
 
+@login_required
 def buildings_detail(request, building_id):
     
     building = Building.objects.get(id=building_id)
@@ -37,7 +42,7 @@ def buildings_detail(request, building_id):
         'references': references_building_doesnt_have
     })
 
-class BuildingCreate(CreateView):
+class BuildingCreate(LoginRequiredMixin, CreateView):
     model = Building
     fields = ['name', 'opening_year', 'city', 'country', 'height_in_feet']
 
@@ -50,14 +55,15 @@ class BuildingCreate(CreateView):
         return super().form_valid(form)
 
 
-class BuildingUpdate(UpdateView):
+class BuildingUpdate(LoginRequiredMixin, UpdateView):
     model = Building
     fields = '__all__'
 
-class BuildingDelete(DeleteView):
+class BuildingDelete(LoginRequiredMixin, DeleteView):
     model = Building
     success_url = '/buildings'
 
+@login_required
 def add_visit(request, building_id):
     # create a ModelForm instance using the data in request.POST (req.body in Express.js)
     form = VisitForm(request.POST)
@@ -70,14 +76,15 @@ def add_visit(request, building_id):
         new_visit.save()
     return redirect('detail', building_id=building_id)
 
+@login_required
 def assoc_reference(request, building_id, reference_id):
     Building.objects.get(id=building_id).references.add(reference_id)
     return redirect('detail', building_id=building_id)
 
-class ReferenceList(ListView):
+class ReferenceList(LoginRequiredMixin, ListView):
     model = Reference
 
-class ReferenceCreate(CreateView):
+class ReferenceCreate(LoginRequiredMixin, CreateView):
     model = Reference
     fields = '__all__'
 

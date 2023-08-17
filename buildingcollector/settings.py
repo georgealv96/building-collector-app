@@ -118,6 +118,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# If this variable is created (like how we just did), django.contrib.auth will use its value to redirect to that specific path after the user logs in
+LOGIN_REDIRECT_URL = '/buildings/'
+LOGOUT_REDIRECT_URL = '/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

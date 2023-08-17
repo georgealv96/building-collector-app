@@ -20,10 +20,15 @@
         </ul>
         <ul class="right">
           <li><a href="{% url 'about' %}">About</a></li>
-          <li><a href="{% url 'buildings_create' %}">Add a Building</a></li>
-          <li><a href="{% url 'index' %}">All Buildings</a></li>
-          <li><a href="{% url 'references_index' %}">All Building References</a></li>
-          <li><a href="{% url 'references_create' %}">Add a Building Reference</a></li>
+          {% if user.is_authenticated %}
+            <li><a href="{% url 'buildings_create' %}">Add a Building</a></li>
+            <li><a href="{% url 'index' %}">All Buildings</a></li>
+            <li><a href="{% url 'references_index' %}">All Building References</a></li>
+            <li><a href="{% url 'references_create' %}">Add a Building Reference</a></li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+          {% else %}
+            <li><a href="{% url 'login' %}">Log In</a></li> 
+          {% endif %} 
         </ul>
       </div>
     </nav>

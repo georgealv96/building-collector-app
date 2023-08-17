@@ -13,4 +13,5 @@ urlpatterns = [
     path('buildings/<int:building_id>/assoc_reference/<int:reference_id>/', views.assoc_reference, name='assoc_reference'),
     path('references/', views.ReferenceList.as_view(), name='references_index'),
     path('references/create/', views.ReferenceCreate.as_view(), name='references_create'),
+    path('accounts/signup/', views.signup, name='signup'),
 ]
